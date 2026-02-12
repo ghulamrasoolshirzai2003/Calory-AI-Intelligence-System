@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calories AI - Precision Calorie Tracking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1ded70",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102217",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-white min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-[#326747]/20">
+<div class="flex items-center p-4 justify-between max-w-screen-xl mx-auto w-full">
+<div class="flex items-center gap-2">
+<div class="bg-primary rounded-lg p-1">
+<span class="material-symbols-outlined text-background-dark font-bold">nutrition</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Calories AI</h2>
+</div>
+<div class="flex items-center justify-end">
+<a href="code.html" class="text-primary text-base font-bold leading-normal tracking-[0.015em] cursor-pointer">Login</a>
+</div>
+</div>
+</header>
+<main class="flex flex-col w-full overflow-x-hidden">
+<!-- HeroSection -->
+<section class="@container">
+<div class="flex flex-col gap-8 px-4 py-12 @[864px]:flex-row @[864px]:items-center max-w-screen-xl mx-auto">
+<div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover rounded-xl border-2 border-[#326747] shadow-2xl shadow-primary/10 @[864px]:w-1/2" data-alt="Mobile app screen showing AI identifying food calories" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhPMsH1o3GeI2b416RZ_25HtCIsJwMtZiRDue0J3R4_RYkAW8zViltU52S9LcX86TglfRh6HhWY4xOR-89K5bUbaS6hNT7rcUby9jeuvwfNLiENvDDzA0Bkv3dgQMvEp9rqg-DvkCgq4M8_Wa7YfgXVubB1OoFsTNKRtBXgmLCwpqlOy13AWK8V4THYzUIBtP171Fdc0dc0zJ8eghjlRuFyZJI5rJ04AsI2RH830CN9mwM9pl5B98eyJNscEkT48dA9ITwc24zfeQU");'>
+</div>
+<div class="flex flex-col gap-6 @[864px]:w-1/2">
+<div class="flex flex-col gap-3 text-left">
+<div class="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            AI-Powered Nutrition
+                        </div>
+<h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">
+                            Precision Calorie Tracking with AI
+                        </h1>
+<h2 class="text-white/70 text-base font-normal leading-relaxed @[480px]:text-lg">
+                            Snap a photo, track your macros instantly. No manual typing, no searching databases. Let the AI do the heavy lifting.
+                        </h2>
+</div>
+<div class="flex flex-col gap-4">
+<a href="code.html" class="flex w-full cursor-pointer items-center justify-center rounded-xl h-12 px-4 bg-[#234832] text-white text-sm font-bold tracking-[0.015em] hover:bg-[#2d5c40] transition-colors">
+    <span>Get Started</span>
+</a>
+<!-- MetaText -->
+<div class="flex items-center justify-center gap-2 text-[#92c9a8] text-sm font-normal">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-background-dark bg-gray-500"></div>
+<div class="w-6 h-6 rounded-full border-2 border-background-dark bg-gray-600"></div>
+<div class="w-6 h-6 rounded-full border-2 border-background-dark bg-gray-700"></div>
+</div>
+<p>Trusted by 10,000+ users</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SectionHeader -->
+<section class="max-w-screen-xl mx-auto w-full">
+<div class="px-4 pt-12 pb-4">
+<h2 class="text-white text-[28px] font-bold leading-tight tracking-[-0.015em] text-center">Choose Your Plan</h2>
+<p class="text-white/50 text-center text-sm mt-2">Scale your fitness journey with the right tools.</p>
+</div>
+</section>
+<!-- PricingCards -->
+<section class="max-w-screen-xl mx-auto w-full px-4 py-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Free Plan -->
+<div class="flex flex-col gap-6 rounded-2xl border border-solid border-[#326747]/50 bg-[#193324]/40 p-8 hover:border-[#326747] transition-colors">
+<div class="flex flex-col gap-2">
+<h3 class="text-white/70 text-sm font-bold uppercase tracking-wider">Basic</h3>
+<h1 class="text-white text-2xl font-bold leading-tight">Free</h1>
+<p class="flex items-baseline gap-1 text-white">
+<span class="text-white text-5xl font-black leading-tight tracking-[-0.033em]">$0</span>
+<span class="text-white/60 text-lg font-medium">/mo</span>
+</p>
+</div>
+<a href="code.html" class="flex w-full cursor-pointer items-center justify-center rounded-xl h-12 px-4 bg-[#234832] text-white text-sm font-bold tracking-[0.015em] hover:bg-[#2d5c40] transition-colors">
+    <span>Get Started</span>
+</a>
+<div class="flex flex-col gap-4 mt-2">
+<div class="text-[15px] font-normal leading-normal flex gap-3 text-white/90">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            3 analyses per day
+                        </div>
+<div class="text-[15px] font-normal leading-normal flex gap-3 text-white/90">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Basic nutrition stats
+                        </div>
+<div class="text-[15px] font-normal leading-normal flex gap-3 text-white/40">
+<span class="material-symbols-outlined text-[20px]">block</span>
+                            Daily AI reports
+                        </div>
+</div>
+</div>
+<!-- Pro Plan -->
+<div class="relative flex flex-col gap-6 rounded-2xl border-2 border-solid border-primary bg-[#193324] p-8 shadow-2xl shadow-primary/20">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-background-dark text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+                        Most Popular
+                    </div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<h3 class="text-primary text-sm font-bold uppercase tracking-wider">Premium</h3>
+</div>
+<h1 class="text-white text-2xl font-bold leading-tight">Pro</h1>
+<p class="flex items-baseline gap-1 text-white">
+<span class="text-white text-5xl font-black leading-tight tracking-[-0.033em]">$9.99</span>
+<span class="text-white/60 text-lg font-medium">/mo</span>
+</p>
+</div>
+<!--<a href="#" class="flex w-full cursor-pointer items-center justify-center rounded-xl h-12 px-4 bg-primary text-background-dark text-sm font-bold tracking-[0.015em] hover:brightness-110 transition-all">
+    <span>Go Pro</span>
+</a>-->
+<div class="flex flex-col gap-4 mt-2">
+<div class="text-[15px] font-normal leading-normal flex gap-3 text-white">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Unlimited AI analyses
+                        </div>
+<div class="text-[15px] font-normal leading-normal flex gap-3 text-white">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Daily AI coaching reports
+                        </div>
+<div class="text-[15px] font-normal leading-normal flex gap-3 text-white">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Priority 24/7 support
+                        </div>
+<div class="text-[15px] font-normal leading-normal flex gap-3 text-white">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+                            Export data to Apple Health
+                        </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="mt-12 border-t border-[#326747]/20 p-8 text-center">
+<p class="text-white/40 text-sm">© 2024 Calories AI. All rights reserved.</p>
+<div class="flex justify-center gap-6 mt-4 text-white/60 text-xs font-medium uppercase tracking-widest">
+    <a href="#" onclick="alert('Privacy Policy coming soon!')" class="hover:text-primary transition-colors">Privacy</a>
+    <a href="#" onclick="alert('Terms of Service coming soon!')" class="hover:text-primary transition-colors">Terms</a>
+    <a href="#" onclick="alert('Contact form coming soon!')" class="hover:text-primary transition-colors">Contact</a>
+</div>
+<div class="h-10"></div>
+</footer>
+</main>
+</body></html>

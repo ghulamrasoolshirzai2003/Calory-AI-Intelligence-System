@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Calories AI - History & Trends</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1ded70",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102217",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better mobile feel */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white transition-colors duration-300">
+    <div class="fixed inset-0 z-50 hidden" id="side-menu">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleMenu()"></div>
+        <div class="relative flex h-full w-10/12 flex-col gap-4 bg-background-light dark:bg-background-dark p-4 shadow-2xl transition-transform duration-300">
+            <div class="flex items-center justify-between px-4 pb-2 pt-4">
+                <h2 id="sidebar-user-name" class="text-xl font-bold text-white">Loading...</h2>
+                <button class="text-slate-500 dark:text-slate-400" onclick="toggleMenu()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <ul class="flex flex-col gap-2">
+                <li onclick="window.location.href='calories_ai_dashboard.html'" class="flex h-12 items-center gap-4 rounded-lg px-4 hover:bg-primary/10 cursor-pointer transition-colors">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-300">dashboard</span>
+                    <p class="text-base font-bold leading-tight truncate">Dashboard</p>
+                </li>
+
+                <li onclick="window.location.href='history_&_trends_view.html'" class="flex h-12 items-center gap-4 rounded-lg px-4 bg-primary/20 text-primary cursor-pointer">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    <p class="text-base font-bold leading-tight truncate">History & Trends</p>
+                </li>
+
+                <li onclick="window.location.href='personalized_target_summary.html'" class="flex h-12 items-center gap-4 rounded-lg px-4 hover:bg-primary/10 cursor-pointer transition-colors">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-300">ads_click</span>
+                    <p class="text-base font-bold leading-tight truncate">Goals</p>
+                </li>
+
+                <li onclick="window.location.href='settings_&_profile.html'" class="flex h-12 items-center gap-4 rounded-lg px-4 hover:bg-primary/10 cursor-pointer transition-colors">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-300">settings</span>
+                    <p class="text-base font-bold leading-tight truncate">Settings</p>
+                </li>
+            </ul>
+            <div class="mt-auto p-4 border-t border-slate-200 dark:border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div id="sidebar-user-initials" class="h-10 w-10 rounded-full bg-green-900 flex items-center justify-center text-green-100 font-bold">
+    ...
+</div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold">Pro Member</p>
+                        <p class="text-xs text-slate-500">Premium Plan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <header class="sticky top-0 z-40 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-slate-200 dark:border-slate-800">
+            <button class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center justify-center" onclick="toggleMenu()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">History & Trends</h2>
+            <div class="flex w-12 items-center justify-end">
+                <button class="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-transparent text-slate-900 dark:text-white">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                </button>
+            </div>
+        </header>
+        <main class="flex-1">
+            <section class="py-4">
+                <h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-2">Weekly Trends</h2>
+                <div class="px-4">
+                    <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-6 shadow-sm">
+                        <div class="flex flex-col gap-1 mb-6">
+                            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Daily Calorie Average</p>
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold">2,150 <span class="text-lg font-medium opacity-60">kcal</span></p>
+                                <span class="bg-primary/20 text-primary text-xs font-bold px-2 py-0.5 rounded-full">+5% vs LW</span>
+                            </div>
+                            <p class="text-slate-400 text-xs font-normal">Oct 20 - Oct 26</p>
+                        </div>
+                        <div class="grid h-48 grid-flow-col gap-3 items-end justify-items-center">
+                            <div class="flex flex-col items-center gap-2 w-full h-full justify-end">
+                                <div class="bg-primary/20 w-full rounded-t-lg relative group" style="height: 60%;">
+                                    <div class="absolute bottom-0 w-full bg-primary rounded-t-lg" style="height: 85%;"></div>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-[11px] font-bold">MON</p>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 w-full h-full justify-end">
+                                <div class="bg-primary/20 w-full rounded-t-lg relative" style="height: 60%;">
+                                    <div class="absolute bottom-0 w-full bg-primary rounded-t-lg" style="height: 100%;"></div>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-[11px] font-bold">TUE</p>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 w-full h-full justify-end">
+                                <div class="bg-primary/20 w-full rounded-t-lg relative" style="height: 60%;">
+                                    <div class="absolute bottom-0 w-full bg-primary rounded-t-lg" style="height: 75%;"></div>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-[11px] font-bold">WED</p>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 w-full h-full justify-end">
+                                <div class="bg-primary/20 w-full rounded-t-lg ring-2 ring-primary ring-offset-2 ring-offset-background-dark relative" style="height: 60%;">
+                                    <div class="absolute bottom-0 w-full bg-primary rounded-t-lg" style="height: 95%;"></div>
+                                </div>
+                                <p class="text-primary text-[11px] font-black">THU</p>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 w-full h-full justify-end">
+                                <div class="bg-primary/20 w-full rounded-t-lg relative" style="height: 60%;">
+                                    <div class="absolute bottom-0 w-full bg-slate-300 dark:bg-slate-700 rounded-t-lg" style="height: 0%;"></div>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-[11px] font-bold">FRI</p>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 w-full h-full justify-end">
+                                <div class="bg-primary/20 w-full rounded-t-lg relative" style="height: 60%;">
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-[11px] font-bold">SAT</p>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 w-full h-full justify-end">
+                                <div class="bg-primary/20 w-full rounded-t-lg relative" style="height: 60%;">
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 text-[11px] font-bold">SUN</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-200 dark:border-white/5 flex justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+                            <span>Goal: 2,300 kcal</span>
+                            <span class="text-primary">Target Hit: 4/7 Days</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-4 pb-20">
+                <div class="flex items-center justify-between px-4 pb-3 pt-5">
+                    <h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Daily History</h2>
+                    <button onclick="alert('Filter options: \n- High Protein\n- Low Carb\n- Sugar Free')" class="text-primary text-sm font-bold uppercase tracking-wider hover:opacity-80 transition-opacity">
+                        Filter
+                    </button>
+                </div>
+                <div class="flex flex-col gap-3 px-4">
+                    <div class="bg-white dark:bg-white/5 border border-primary/30 rounded-xl overflow-hidden shadow-sm">
+                        <div class="p-4 flex flex-col gap-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-slate-900 dark:text-white font-bold text-lg">Today, Oct 24</p>
+                                    <p class="text-primary text-sm font-medium">850 kcal remaining</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-slate-900 dark:text-white font-black text-xl">1,450</p>
+                                    <p class="text-slate-500 text-xs font-medium">of 2,300 kcal</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div class="bg-slate-100 dark:bg-white/5 p-3 rounded-lg">
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Protein</p>
+                                    <p class="text-sm font-bold text-slate-900 dark:text-white">112g <span class="text-[10px] opacity-60">/ 160g</span></p>
+                                    <div class="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full mt-2 overflow-hidden">
+                                        <div class="h-full bg-primary" style="width: 70%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-100 dark:bg-white/5 p-3 rounded-lg">
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Carbs</p>
+                                    <p class="text-sm font-bold text-slate-900 dark:text-white">145g <span class="text-[10px] opacity-60">/ 220g</span></p>
+                                    <div class="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full mt-2 overflow-hidden">
+                                        <div class="h-full bg-blue-400" style="width: 65%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-100 dark:bg-white/5 p-3 rounded-lg">
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Fats</p>
+                                    <p class="text-sm font-bold text-slate-900 dark:text-white|">42g <span class="text-[10px] opacity-60">/ 75g</span></p>
+                                    <div class="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full mt-2 overflow-hidden">
+                                        <div class="h-full bg-orange-400" style="width: 55%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center mt-6">
+                                <button onclick="toggleMealLog()" class="flex items-center gap-2 text-xs font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest mb-4">
+                                    View Meal Log (4)
+                                    <span id="log-icon" class="material-symbols-outlined text-sm transition-transform duration-300">keyboard_arrow_down</span>
+                                </button>
+
+                                <div id="meal-log-list" class="hidden w-full flex-col gap-3 transition-all duration-300">
+                                    <a href="detailed_meal_log_view.html" class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeohVmCLI_6i09vCTyolakP597nNUZYdD_ZifDV3B_I0IDMecWrvaRLzxMmQIYdCX04T9_mdY2xk5yu9SmJstO0wrl-oSFEJg2L_bQeqz-zoJVM1PqRqWIf4bhcy2ZlAHBwR3xE_PYI9P-2jRqR8RBbRxavEERS_sNkqAcohcj5-eyNfrPbU2aB53GB-PSarNIqY8WFODUjElq5Zfjy_Qzd1FM4WBhTqGcXHyrdUmoeFWCdAjhwf2M7qE4H9FjZTQTHqM2Z2IV1AZM");'></div>
+                                            <div>
+                                                <p class="text-sm font-bold text-white">Avocado Toast</p>
+                                                <p class="text-xs text-gray-500">Breakfast • 450 kcal</p>
+                                            </div>
+                                        </div>
+                                        <span class="material-symbols-outlined text-gray-500">chevron_right</span>
+                                    </a>
+
+                                    <a href="details_chicken.html" class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 rounded-lg bg-cover bg-center" style='background-image: url("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=150");'></div>
+                                            <div>
+                                                <p class="text-sm font-bold text-white">Chicken Bowl</p>
+                                                <p class="text-xs text-gray-500">Lunch • 580 kcal</p>
+                                            </div>
+                                        </div>
+                                        <span class="material-symbols-outlined text-gray-500">chevron_right</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <p class="text-slate-900 dark:text-white font-bold">2,280 <span class="text-[10px] font-normal opacity-60">kcal</span></p>
+                                    <p class="text-[10px] text-primary font-bold">GOAL REACHED</p>
+                                </div>
+                                <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 overflow-x-auto pb-6 -mx-4 px-4 scrollbar-hide">
+                        
+                        <a href="detailed_meal_log_view.html" class="min-w-[280px] p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-primary/50 transition-colors group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-white font-bold text-lg">Yesterday</p>
+                                    <p class="text-xs text-green-400 font-bold uppercase tracking-wider mt-1">Goal Reached</p>
+                                </div>
+                                <span class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">chevron_right</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-[10px] bg-green-500/20 text-green-500 px-2 py-1 rounded">P: 165g</span>
+                                <span class="text-[10px] bg-blue-500/20 text-blue-500 px-2 py-1 rounded">C: 190g</span>
+                                <span class="text-[10px] bg-orange-500/20 text-orange-500 px-2 py-1 rounded">F: 55g</span>
+                            </div>
+                        </a>
+
+                        <a href="detailed_meal_log_view.html" class="min-w-[280px] p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-primary/50 transition-colors group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-white font-bold text-lg">Oct 22</p>
+                                    <p class="text-xs text-red-400 font-bold uppercase tracking-wider mt-1">110 Over</p>
+                                </div>
+                                <span class="material-symbols-outlined text-gray-600 group-hover:text-primary transition-colors">chevron_right</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-[10px] bg-green-500/20 text-green-500 px-2 py-1 rounded">P: 142g</span>
+                                <span class="text-[10px] bg-blue-500/20 text-blue-500 px-2 py-1 rounded">C: 245g</span>
+                                <span class="text-[10px] bg-orange-500/20 text-orange-500 px-2 py-1 rounded">F: 82g</span>
+                            </div>
+                        </a>
+                    </div>
+                    </div>
+            </section>
+        </main>
+        <div class="fixed bottom-6 right-6">
+            <a href="ai_meal_analysis.html" class="flex size-14 items-center justify-center rounded-full bg-primary text-black shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined font-bold text-2xl">add</span>
+            </a>
+        </div>
+        <nav class="fixed bottom-0 w-full bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-lg border-t border-slate-200 dark:border-white/5 flex justify-around py-3 px-6 pb-6">
+            <a href="calories_ai_dashboard.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-[10px] font-bold uppercase tracking-tighter">Home</span>
+            </a>
+            <button class="flex flex-col items-center gap-1 text-primary">
+                <span class="material-symbols-outlined fill-1">trending_up</span>
+                <span class="text-[10px] font-bold uppercase tracking-tighter">History</span>
+            </button>
+            <a href="ai_meal_analysis.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">camera_alt</span>
+                <span class="text-[10px] font-bold uppercase tracking-tighter">Scan</span>
+            </a>
+            <a href="settings_&_profile.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+            </a>
+        </nav>
+    </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('side-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // ADDED: This function makes the Meal Log Dropdown work!
+        function toggleMealLog() {
+            const list = document.getElementById('meal-log-list');
+            const icon = document.getElementById('log-icon');
+            
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                list.classList.add('flex');
+                icon.style.transform = "rotate(180deg)";
+            } else {
+                list.classList.add('hidden');
+                list.classList.remove('flex');
+                icon.style.transform = "rotate(0deg)";
+            }
+        }
+    </script>
+
+<script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            // 1. Get the elements we want to change
+            // (Make sure you added id="sidebar-user-name" in Step 1!)
+            const nameEl = document.getElementById('sidebar-user-name');
+            const initialsEl = document.getElementById('sidebar-user-initials');
+
+            // 2. Fetch the real user data from Database
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    const realName = data.name || user.displayName || "User";
+                    
+                    // Update the Name text
+                    if (nameEl) nameEl.innerText = realName;
+
+                    // Update the "AR" circle
+                    if (initialsEl) {
+                        // If they have a photo, show it
+                        if (data.photoURL || user.photoURL) {
+                            initialsEl.innerHTML = `<img src="${data.photoURL || user.photoURL}" class="w-full h-full rounded-full object-cover">`;
+                            // Remove background color so the image looks nice
+                            initialsEl.classList.remove('bg-green-900'); 
+                        } else {
+                            // If no photo, show first letter (e.g., "A")
+                            initialsEl.innerText = realName.charAt(0).toUpperCase();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        } else {
+            // If user is not logged in, kick them out
+            window.location.href = "code.html";
+        }
+    });
+</script>
+</body> 
+</html>
+
+
+</body>
+</html>

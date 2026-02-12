@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Calories AI Dashboard</title>
+
+    <script type="module">
+        // 1. Import the SHARED config (Connects to 'calory-ai')
+        import { auth, db } from "./firebase-config.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // 2. Date Helper
+        function setDashboardDate() {
+            const el = document.getElementById("todayDate");
+            if (!el) return;
+            const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+            el.textContent = new Date().toLocaleDateString("en-US", options);
+        }
+
+        // 3. Main Logic
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                // Not logged in -> Go to Login
+                window.location.href = "code.html";
+                return;
+            }
+
+            try {
+                // Fetch User Profile from 'calory-ai'
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+
+                    // A. Update Profile Picture
+                    document.querySelectorAll("img[alt='Profile']").forEach(img => {
+                        if (data.photoURL) img.src = data.photoURL;
+                    });
+
+
+                    // 🔴 NEW: Update Sidebar Menu Data
+                const menuName = document.getElementById('menu-user-name');
+                const menuEmail = document.getElementById('menu-user-email');
+                const menuAvatar = document.getElementById('menu-avatar');
+
+                if (menuName) menuName.innerText = data.name || user.displayName || "User";
+                if (menuEmail) menuEmail.innerText = data.email || user.email;
+                if (menuAvatar && (data.photoURL || user.photoURL)) {
+                    menuAvatar.src = data.photoURL || user.photoURL;
+                }
+
+                    // B. Update Calorie Goal (The Real-Time Data)
+                    const userTarget = data.targetCalories || 2000; // Default if missing
+                    const consumed = 1240; // Static for now (we will make this real later)
+                    const remaining = userTarget - consumed;
+
+                    // Update Text
+                    document.getElementById("display-goal").innerText = userTarget.toLocaleString();
+                    document.getElementById("display-consumed").innerText = consumed.toLocaleString();
+                    document.getElementById("display-remaining").innerText = remaining.toLocaleString();
+
+                    // Update Progress Ring Visual
+                    const percent = Math.min((consumed / userTarget) * 100, 100);
+                    // Circumference is ~301.59 (2 * pi * 48)
+                    const offset = 301.59 - (301.59 * percent) / 100;
+                    document.getElementById("progress-circle").style.strokeDashoffset = offset;
+                
+                } else {
+                    // Profile missing -> Go to Onboarding
+                    window.location.href = "onboarding__goal_selection.html";
+                }
+
+            } catch (err) {
+                console.error("Dashboard Error:", err);
+                // alert("Error loading data: " + err.message);
+            }
+            
+            setDashboardDate();
+        });
+
+        // 4. Logout Function
+        window.handleLogout = function () {
+            signOut(auth).then(() => {
+                window.location.href = "code.html";
+            });
+        };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#1ded70", "background-light": "#f6f8f7", "background-dark": "#102217" },
+                    fontFamily: { "display": ["Inter"] },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; min-height: max(884px, 100dvh); }
+        .progress-ring-circle { transition: stroke-dashoffset 1s ease-out; transform: rotate(-90deg); transform-origin: 50% 50%; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
+    
+    <header class="sticky top-0 z-50 bg-background-light dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-white/10 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <button onclick="document.getElementById('mobile-sidebar').classList.remove('-translate-x-full')" class="p-2 -ml-2 text-slate-400 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <h1 class="text-xl font-bold tracking-tight">Calories AI</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="pro_upgrade_modal.html" class="bg-primary/20 text-primary px-3 py-1.5 rounded-full text-sm font-semibold flex items-center gap-1 cursor-pointer">
+                <span class="material-symbols-outlined text-sm">bolt</span> PRO
+            </a>
+            <div class="w-8 h-8 rounded-full overflow-hidden border border-primary/30">
+                <a href="settings_&_profile.html" class="block w-8 h-8 rounded-full overflow-hidden border border-primary/30 cursor-pointer hover:border-primary transition-colors">
+                    <img class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name=User&background=1ded70&color=102217" alt="Profile"/>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto pb-24">
+        <section class="p-4">
+            <div class="flex items-end justify-between mb-4">
+                <div>
+                    <h3 class="text-sm font-medium opacity-60">Daily Summary</h3>
+                    <h2 id="todayDate" class="text-2xl font-bold">Loading...</h2>
+                </div>
+                <button class="text-primary text-sm font-medium flex items-center">
+                    <a href="history_&_trends_view.html" class="text-primary text-sm font-bold cursor-pointer hover:underline">History ></a>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="col-span-2 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-6 rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-primary/10">
+                        <div class="h-full bg-primary w-[56%]"></div>
+                    </div>
+                    
+                    <div class="flex items-center gap-8">
+                        <div class="relative w-28 h-28 flex items-center justify-center">
+                            <svg class="w-full h-full">
+                                <circle class="text-gray-200 dark:text-white/10" cx="56" cy="56" fill="transparent" r="48" stroke="currentColor" stroke-width="8"></circle>
+                                <circle id="progress-circle" class="text-primary progress-ring-circle" cx="56" cy="56" fill="transparent" r="48" stroke="currentColor" stroke-dasharray="301.59" stroke-dashoffset="301.59" stroke-linecap="round" stroke-width="8"></circle>
+                            </svg>
+                            <div class="absolute text-center">
+                                <p id="display-remaining" class="text-2xl font-black">...</p>
+                                <p class="text-[10px] uppercase font-bold tracking-widest opacity-50">kcal left</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-xs font-medium opacity-60 uppercase tracking-wider">Consumed</p>
+                                <p class="text-lg font-bold"><span id="display-consumed">...</span> <span class="text-xs font-normal opacity-50">kcal</span></p>
+                            </div>
+                            <div class="h-[1px] w-full bg-gray-200 dark:bg-white/10"></div>
+                            <div>
+                                <p class="text-xs font-medium opacity-60 uppercase tracking-wider">Goal</p>
+                                <p class="text-lg font-bold">
+                                  <span id="display-goal">...</span>
+                                  <span class="text-xs font-normal opacity-50">kcal</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider opacity-60">Protein</span>
+                        <span class="text-primary text-xs font-bold">57%</span>
+                    </div>
+                    <p class="text-xl font-bold">85g <span class="text-xs font-normal opacity-50">/ 150g</span></p>
+                    <div class="w-full h-1.5 bg-gray-200 dark:bg-white/10 rounded-full mt-3 overflow-hidden">
+                        <div class="h-full bg-primary w-[57%]"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider opacity-60">Carbs</span>
+                        <span class="text-yellow-400 text-xs font-bold">48%</span>
+                    </div>
+                    <p class="text-xl font-bold">120g <span class="text-xs font-normal opacity-50">/ 250g</span></p>
+                    <div class="w-full h-1.5 bg-gray-200 dark:bg-white/10 rounded-full mt-3 overflow-hidden">
+                        <div class="h-full bg-yellow-400 w-[48%]"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider opacity-60">Fats</span>
+                        <span class="text-orange-400 text-xs font-bold">64%</span>
+                    </div>
+                    <p class="text-xl font-bold">45g <span class="text-xs font-normal opacity-50">/ 70g</span></p>
+                    <div class="w-full h-1.5 bg-gray-200 dark:bg-white/10 rounded-full mt-3 overflow-hidden">
+                        <div class="h-full bg-orange-400 w-[64%]"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-xl flex flex-col justify-center items-center">
+                    <span class="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Water</span>
+                    <div class="flex gap-1">
+                        <span class="material-symbols-outlined text-primary text-xl">water_drop</span>
+                        <span class="material-symbols-outlined text-primary text-xl">water_drop</span>
+                        <span class="material-symbols-outlined text-gray-300 dark:text-white/20 text-xl">water_drop</span>
+                        <span class="material-symbols-outlined text-gray-300 dark:text-white/20 text-xl">water_drop</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-4">
+            <div class="flex items-center justify-between mb-4 mt-2">
+                <h3 class="text-lg font-bold">Today's Logs</h3>
+                <a href="detailed_meal_log_view.html" class="text-[10px] font-bold tracking-widest text-primary uppercase cursor-pointer hover:text-white transition-colors">Edit</a>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex items-center gap-4 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-xl">
+                    <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 dark:bg-white/5 shrink-0">
+                         <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200"/>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold truncate">Chicken Buddha Bowl</h4>
+                            <span class="text-sm font-bold">580 <span class="text-[10px] opacity-60">kcal</span></span>
+                        </div>
+                        <p class="text-xs opacity-60 mb-2">01:15 PM • Lunch</p>
+                        <div class="flex gap-2">
+                            <span class="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded font-bold">P: 42g</span>
+                            <span class="text-[10px] bg-yellow-400/10 text-yellow-500 px-1.5 py-0.5 rounded font-bold">C: 56g</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-background-dark/90 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 px-6 py-3 pb-8 flex justify-between items-center z-50">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined fill-1">grid_view</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Dashboard</span>
+        </button>
+        <a href="history_&_trends_view.html" class="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 hover:text-primary transition-all cursor-pointer">
+            <span class="material-symbols-outlined">timeline</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Insights</span>
+        </a>
+        <div class="w-12"></div>
+        <a href="personalized_target_summary.html" class="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 hover:text-primary transition-all">
+            <span class="material-symbols-outlined">restaurant</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Plans</span>
+        </a>
+        <a href="settings_&_profile.html" class="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 hover:text-primary transition-all">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="text-[10px] font-bold uppercase tracking-tighter">Settings</span>
+        </a>
+        <a href="ai_meal_analysis.html" class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-background-dark w-16 h-16 rounded-full shadow-lg shadow-primary/30 flex items-center justify-center transition-transform active:scale-90 border-4 border-background-light dark:border-background-dark">
+            <span class="material-symbols-outlined text-3xl font-bold">add</span>
+        </a>
+    </nav>
+    
+    <a href="ai_meal_analysis.html" class="fixed bottom-24 right-6 bg-[#1e2e25] text-white px-4 py-3 rounded-xl border border-primary/20 flex items-center gap-2 shadow-lg shadow-black/40 hover:scale-105 transition-transform z-30 cursor-pointer">
+        <span class="material-symbols-outlined text-primary">photo_camera</span>
+        <span class="text-xs font-bold">Snap a photo to log!</span>
+    </a>
+
+    <div id="mobile-sidebar" class="fixed inset-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
+        <div onclick="document.getElementById('mobile-sidebar').classList.add('-translate-x-full')" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+        
+        <div class="relative w-[85%] max-w-[320px] h-full bg-[#102217] border-r border-white/10 p-6 shadow-2xl flex flex-col">
+            
+            <div class="flex items-center justify-between mb-8 pt-2">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full border-2 border-primary/30 p-0.5">
+                        <img id="menu-avatar" src="https://ui-avatars.com/api/?name=User&background=1ded70&color=102217" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div>
+                        <h3 id="menu-user-name" class="text-white font-bold text-lg leading-tight">Loading...</h3>
+                        <p id="menu-user-email" class="text-slate-400 text-xs">please wait...</p>
+                    </div>
+                </div>
+                
+                <button onclick="document.getElementById('mobile-sidebar').classList.add('-translate-x-full')" class="text-slate-400 hover:text-white bg-white/5 p-2 rounded-full">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+
+            <div class="h-px w-full bg-white/10 mb-6"></div>
+
+            <nav class="flex flex-col gap-3 mb-auto">
+                <a href="calories_ai_dashboard.html" class="flex items-center gap-4 text-primary font-bold bg-primary/10 p-4 rounded-xl border border-primary/20">
+                    <span class="material-symbols-outlined">grid_view</span> 
+                    Dashboard
+                </a>
+                <a href="history_&_trends_view.html" class="flex items-center gap-4 text-slate-300 hover:text-white hover:bg-white/5 p-4 rounded-xl transition-all font-medium">
+                    <span class="material-symbols-outlined">timeline</span> 
+                    History & Trends
+                </a>
+                <a href="personalized_target_summary.html" class="flex items-center gap-4 text-slate-300 hover:text-white hover:bg-white/5 p-4 rounded-xl transition-all font-medium">
+                    <span class="material-symbols-outlined">restaurant</span> 
+                    Meal Plans
+                </a>
+                <a href="settings_&_profile.html" class="flex items-center gap-4 text-slate-300 hover:text-white hover:bg-white/5 p-4 rounded-xl transition-all font-medium">
+                    <span class="material-symbols-outlined">settings</span> 
+                    Settings
+                </a>
+            </nav>
+
+            <button onclick="handleLogout()" class="flex items-center gap-3 text-red-500 font-bold hover:text-red-400 hover:bg-red-500/10 transition-all w-full p-4 rounded-xl mt-4">
+                <span class="material-symbols-outlined">logout</span> 
+                Sign Out
+            </button>
+        </div>
+    </div>
+</body>
+</html>

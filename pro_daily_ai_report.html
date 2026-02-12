@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calories AI - Daily AI Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#0f0f0c",
+                        "card-dark": "#1a1812",
+                        "accent-blue": "#4A90E2"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-effect {
+            background: rgba(244, 192, 37, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 192, 37, 0.1);
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-gray-100 min-h-screen">
+<!-- Status Bar Spacer (iOS) -->
+<div class="h-12 w-full"></div>
+<!-- Main Container (Phone Form Factor) -->
+<div class="max-w-[430px] mx-auto pb-24 px-5">
+<!-- Header Section -->
+<header class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="User Profile" class="w-12 h-12 rounded-full border-2 border-primary" data-alt="Professional male portrait for profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4RG2wJGWxmtylsug_lUJKzQE6YY63LkLUDarABph8c9Zf_tHXMDYIQcRqYqVO6g7BLvpOHY5INediSzypYPVUOJCtHM_pKf1ULEx28WSYYClXfx9or4xdnzkQKIgaZSCpsG1ztfS4ySiZNt-bgv4rq1FS01EWimLuNkloaz_B6oQ4iVKhcl6mc7G_k4GBv1m0IjK5KwxZpNG-uaice7cjB_5_ZFsBggp_IJ3KywTGXCKSn17Az0gJ7jk8PWdT-5eOdVafJ4NYH6Df"/>
+<div class="absolute -bottom-1 -right-1 bg-primary text-background-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase">Pro</div>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight">Good morning, Alex!</h1>
+<p class="text-sm text-gray-500 dark:text-gray-400">Monday, Oct 23</p>
+</div>
+</div>
+<button onclick="toggleShareModal()" class="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full border border-white/10 transition-colors text-xs font-bold uppercase tracking-wider">
+    <span class="material-icons text-sm">ios_share</span>
+    Share
+</button>
+</header>
+<!-- Intro Text -->
+<p class="text-sm text-gray-400 mb-6 italic">Here is your AI breakdown for yesterday.</p>
+<!-- Health Score Hero Card -->
+<div class="bg-card-dark rounded-xl p-6 mb-8 ios-shadow border border-white/5 relative overflow-hidden">
+<!-- Decorative Background Element -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+<div class="flex items-start justify-between mb-6">
+<div>
+<h2 class="text-gray-400 uppercase tracking-widest text-xs font-semibold mb-1">Health Score</h2>
+<div class="flex items-baseline gap-1">
+<span class="text-5xl font-black text-primary">88</span>
+<span class="text-gray-500 font-medium">/100</span>
+</div>
+</div>
+<div class="h-16 w-16 flex items-center justify-center rounded-full border-4 border-primary/20 relative">
+<svg class="absolute inset-0 transform -rotate-90">
+<circle class="text-primary/10" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175.9" stroke-dashoffset="21" stroke-width="4"></circle>
+</svg>
+<span class="material-icons text-primary">auto_awesome</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-white/5 rounded-lg border-l-4 border-primary">
+<p class="text-sm leading-relaxed text-gray-200">
+                        "Your nutrient density yesterday was exceptional. The high protein intake (165g) perfectly supported your strength session. However, the late-night meal at 9:45 PM caused a slight dip in your recovery score. Focus on finishing your last meal 3 hours before sleep to hit a 95+ score today."
+                    </p>
+</div>
+</div>
+</div>
+<!-- Comparative Insights Section -->
+<section class="mb-8">
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-icons text-accent-blue text-sm">equalizer</span>
+                Target vs. Actual
+            </h3>
+<!-- Calories Bar -->
+<div class="bg-card-dark rounded-xl p-5 mb-4 border border-white/5">
+<div class="flex justify-between items-end mb-3">
+<span class="text-sm font-medium">Calories</span>
+<div class="text-right">
+<span class="text-lg font-bold">2,450</span>
+<span class="text-xs text-gray-500 block">Target: 2,400</span>
+</div>
+</div>
+<div class="h-3 w-full bg-white/5 rounded-full overflow-hidden flex">
+<div class="h-full bg-accent-blue rounded-full" style="width: 100%"></div>
+</div>
+<div class="mt-2 h-3 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 102%"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] text-accent-blue font-bold uppercase tracking-tighter">● Target</span>
+<span class="text-[10px] text-primary font-bold uppercase tracking-tighter">● Actual</span>
+</div>
+</div>
+<!-- Macros Grid -->
+<div class="grid grid-cols-3 gap-3">
+<!-- Protein -->
+<div class="bg-card-dark rounded-xl p-4 border border-white/5">
+<span class="text-xs text-gray-500 block mb-2">Protein</span>
+<div class="h-20 flex flex-row items-end gap-2 justify-center mb-2">
+<div class="w-2.5 bg-accent-blue rounded-t-sm" style="height: 90%"></div>
+<div class="w-2.5 bg-primary rounded-t-sm" style="height: 100%"></div>
+</div>
+<div class="text-center">
+<span class="text-sm font-bold">165g</span>
+</div>
+</div>
+<!-- Carbs -->
+<div class="bg-card-dark rounded-xl p-4 border border-white/5">
+<span class="text-xs text-gray-500 block mb-2">Carbs</span>
+<div class="h-20 flex flex-row items-end gap-2 justify-center mb-2">
+<div class="w-2.5 bg-accent-blue rounded-t-sm" style="height: 100%"></div>
+<div class="w-2.5 bg-primary rounded-t-sm" style="height: 85%"></div>
+</div>
+<div class="text-center">
+<span class="text-sm font-bold">210g</span>
+</div>
+</div>
+<!-- Fats -->
+<div class="bg-card-dark rounded-xl p-4 border border-white/5">
+<span class="text-xs text-gray-500 block mb-2">Fats</span>
+<div class="h-20 flex flex-row items-end gap-2 justify-center mb-2">
+<div class="w-2.5 bg-accent-blue rounded-t-sm" style="height: 70%"></div>
+<div class="w-2.5 bg-primary rounded-t-sm" style="height: 75%"></div>
+</div>
+<div class="text-center">
+<span class="text-sm font-bold:">68g</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Micronutrients List -->
+<section class="mb-8">
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-icons text-primary text-sm">biotech</span>
+                Micronutrient Density
+            </h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+<span class="text-sm">Fiber</span>
+<div class="flex items-center gap-3">
+<div class="w-24 h-1.5 bg-white/10 rounded-full">
+<div class="w-full h-full bg-green-500 rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-green-500">100%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+<span class="text-sm">Iron</span>
+<div class="flex items-center gap-3">
+<div class="w-24 h-1.5 bg-white/10 rounded-full">
+<div class="w-[82%] h-full bg-primary rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-primary">82%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+<span class="text-sm">Sodium</span>
+<div class="flex items-center gap-3">
+<div class="w-24 h-1.5 bg-white/10 rounded-full">
+<div class="w-[115%] h-full bg-red-500 rounded-full max-w-full"></div>
+</div>
+<span class="text-xs font-bold text-red-500">115%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Recommendation Section -->
+<section class="bg-primary/10 rounded-xl p-6 border border-primary/30 relative mb-12">
+<div class="absolute -top-3 left-6 bg-primary text-background-dark text-[10px] font-black px-3 py-1 rounded-full uppercase">Chef's Recommendation</div>
+<div class="flex gap-4 items-center mb-4 mt-2">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Healthy Meal" class="w-full h-full object-cover" data-alt="Vibrant Mediterranean salad with chickpeas and spinach" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDESUkA7EPdAJDFTIii05AEUFhZuAk7AieRSRImr2S8LTIx50Nuem57roJydN3qWBumBaZ3Rf0LTS3XjhPR0bAd__yK3cpe3HN83pobLJdGtn660DARNWxBTvkLFwyVQu4c_4zwYDrh8o1twwGWjU22qLDq5mbr7fePliv99lvWGgSSfeRsM3bnFt-0oGMDtmLjgt0_FVipoBvlMu-MBuMWbvV4EVYdzRU-aP9gpXE0xymPZdYjApwo5CnPuoCvcAI70oMWmThvtkuB"/>
+</div>
+<div>
+<h4 class="font-bold text-primary italic">"Potassium Power Bowl"</h4>
+<p class="text-xs text-gray-400">Perfect to offset yesterday's sodium intake.</p>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-sm text-gray-200">
+<span class="font-bold text-primary">AI Tip:</span> Today, prioritize <span class="text-white font-medium">spinach, bananas, and avocados</span>. This will help balance your fluid levels and reduce water retention from last night's meal.
+                </p>
+<div class="pt-2">
+<button onclick="alert('Added to your meal planner!')" class="w-full py-3 bg-primary text-background-dark font-bold rounded-lg text-sm shadow-lg shadow-primary/20 hover:brightness-110 transition-all">
+    Add to Meal Planner
+</button>
+</div>
+</div>
+</section>
+<!-- Action Button -->
+<a href="calories_ai_dashboard.html" class="w-full py-4 text-gray-500 font-medium text-sm flex items-center justify-center gap-2 hover:text-white transition-colors cursor-pointer">
+    Dismiss Report
+    <span class="material-icons text-sm">keyboard_arrow_down</span>
+</a>
+<!-- Bottom Navigation Bar (iOS) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-xl border-t border-white/5 px-8 pb-8 pt-4">
+    <div class="max-w-[430px] mx-auto flex justify-between items-center text-gray-500">
+        
+        <a href="history_&_trends_view.html" class="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
+            <span class="material-icons">dashboard</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Logs</span>
+        </a>
+
+        <div class="flex flex-col items-center gap-1 text-primary cursor-default">
+            <span class="material-icons">insights</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Report</span>
+        </div>
+
+        <div class="flex flex-col items-center gap-1">
+            <a href="ai_meal_analysis.html" class="bg-primary p-2 rounded-full -mt-10 shadow-xl shadow-primary/40 border-4 border-background-dark cursor-pointer hover:scale-105 transition-transform">
+                <span class="material-icons text-background-dark font-black">add</span>
+            </a>
+        </div>
+
+        <a href="personalized_target_summary.html" class="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
+            <span class="material-icons">restaurant_menu</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Plans</span>
+        </a>
+
+        <a href="settings_&_profile.html" class="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
+            <span class="material-icons">settings</span>
+            <span class="text-[10px] font-medium uppercase tracking-tighter">Settings</span>
+        </a>
+
+    </div>
+</nav>
+
+<div id="share-modal" class="fixed inset-0 z-[60] hidden">
+    <div onclick="toggleShareModal()" class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
+    
+    <div class="absolute bottom-0 left-0 right-0 bg-[#1e1e1e] rounded-t-3xl p-6 border-t border-white/10 transform transition-transform duration-300">
+        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-6"></div>
+        
+        <h3 class="text-lg font-bold text-center mb-8">Share your Progress</h3>
+        
+        <div class="grid grid-cols-4 gap-4 mb-8">
+            <a href="https://wa.me/?text=I%20hit%20my%20calorie%20goal%20today%20with%20Calories%20AI!%20%F0%9F%94%A5" target="_blank" class="flex flex-col items-center gap-2 group">
+                <div class="w-14 h-14 rounded-2xl bg-[#25D366]/20 flex items-center justify-center group-hover:bg-[#25D366]/30 transition-colors">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-8 h-8" alt="WhatsApp">
+                </div>
+                <span class="text-xs font-medium text-white/60">WhatsApp</span>
+            </a>
+
+            <a href="https://twitter.com/intent/tweet?text=Just%20crushed%20my%20nutrition%20goals%20on%20Calories%20AI.%20%23Health%20%23AI" target="_blank" class="flex flex-col items-center gap-2 group">
+                <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors border border-white/10">
+                    <svg class="w-7 h-7 fill-white" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </div>
+                <span class="text-xs font-medium text-white/60">X</span>
+            </a>
+
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://caloriesai.com" target="_blank" class="flex flex-col items-center gap-2 group">
+                <div class="w-14 h-14 rounded-2xl bg-[#1877F2]/20 flex items-center justify-center group-hover:bg-[#1877F2]/30 transition-colors">
+                    <span class="material-icons text-[#1877F2] text-3xl">facebook</span>
+                </div>
+                <span class="text-xs font-medium text-white/60">Facebook</span>
+            </a>
+
+            <button onclick="copyLink()" class="flex flex-col items-center gap-2 group">
+                <div class="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors border border-primary/20">
+                    <span class="material-icons text-primary text-2xl">link</span>
+                </div>
+                <span class="text-xs font-medium text-white/60">Copy Link</span>
+            </button>
+        </div>
+
+        <button onclick="toggleShareModal()" class="w-full py-4 bg-white/5 rounded-xl font-bold text-sm hover:bg-white/10 transition-colors">
+            Cancel
+        </button>
+    </div>
+</div>
+
+<script>
+    // Logic to Open/Close the Modal
+    function toggleShareModal() {
+        const modal = document.getElementById('share-modal');
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex'); // Show it
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex'); // Hide it
+        }
+    }
+
+    // Logic to Copy Link
+    function copyLink() {
+        navigator.clipboard.writeText("https://caloriesai.com/share/report/123");
+        alert("Link copied to clipboard!");
+        toggleShareModal(); // Close modal after copying
+    }
+</script>
+
+</body></html>

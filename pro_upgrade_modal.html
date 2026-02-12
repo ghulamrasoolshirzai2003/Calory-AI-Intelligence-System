@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Calories AI - Upgrade to Pro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f4c025", "background-light": "#f8f8f5", "background-dark": "#141414" },
+                    fontFamily: { "display": ["Inter"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-morphism { background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .gradient-button { background: linear-gradient(135deg, #f4c025 0%, #ffdb70 100%); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen">
+
+    <div class="fixed inset-0 z-0 flex flex-col p-6 opacity-40 pointer-events-none">
+        <div class="flex items-center justify-between mb-8">
+            <div class="h-10 w-10 rounded-full bg-gray-700"></div>
+            <div class="h-6 w-24 bg-gray-700 rounded"></div>
+            <div class="h-10 w-10 rounded-full bg-gray-700"></div>
+        </div>
+        <div class="h-48 w-full bg-gray-800 rounded-xl mb-4"></div>
+    </div>
+
+    <div class="fixed inset-0 z-10 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm">
+        
+        <div class="glass-morphism w-full max-w-md rounded-t-[2.5rem] sm:rounded-[2.5rem] overflow-hidden border-t border-white/10 flex flex-col">
+            
+            <div class="flex h-8 w-full items-center justify-center pt-2">
+                <div class="h-1.5 w-12 rounded-full bg-white/20"></div>
+            </div>
+
+            <div class="px-6 pb-10">
+                <div class="flex flex-col items-center pt-4 pb-6">
+                    <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/20">
+                        <span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1">crown</span>
+                    </div>
+                    <h1 class="text-white text-3xl font-bold text-center">Unlock Unlimited Potential</h1>
+                    <p class="text-white/60 text-sm pt-2 text-center">Take your nutrition tracking to the next level.</p>
+                </div>
+
+                <div class="space-y-1 mb-8">
+                    <div class="flex items-center gap-x-4 py-3 border-b border-white/5">
+                        <div class="flex size-6 items-center justify-center rounded-full bg-primary"><span class="material-symbols-outlined text-black text-sm font-bold">check</span></div>
+                        <p class="text-white font-medium">Unlimited AI Analyses</p>
+                    </div>
+                    <div class="flex items-center gap-x-4 py-3 border-b border-white/5">
+                        <div class="flex size-6 items-center justify-center rounded-full bg-primary"><span class="material-symbols-outlined text-black text-sm font-bold">check</span></div>
+                        <p class="text-white font-medium">Daily Macro Reports</p>
+                    </div>
+                    <div class="flex items-center gap-x-4 py-3">
+                        <div class="flex size-6 items-center justify-center rounded-full bg-primary"><span class="material-symbols-outlined text-black text-sm font-bold">check</span></div>
+                        <p class="text-white font-medium">Advanced Trends</p>
+                    </div>
+                </div>
+
+                <div class="flex bg-white/5 p-1.5 rounded-2xl mb-8">
+                    
+                    <label class="relative flex h-14 flex-1 items-center justify-center cursor-pointer group">
+                        <input type="radio" name="billing-cycle" value="monthly" class="peer sr-only">
+                        <div class="absolute inset-0 rounded-xl transition-all peer-checked:bg-white/10"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <span class="text-sm font-semibold text-white/40 peer-checked:text-white">Monthly</span>
+                            <span class="text-[10px] text-white/30 peer-checked:text-white/50">$9.99 / mo</span>
+                        </div>
+                    </label>
+
+                    <label class="relative flex h-14 flex-1 items-center justify-center cursor-pointer group">
+                        <input type="radio" name="billing-cycle" value="yearly" class="peer sr-only" checked>
+                        <div class="absolute inset-0 rounded-xl transition-all peer-checked:bg-white/10"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-sm font-semibold text-white/40 peer-checked:text-white">Yearly</span>
+                                <span class="bg-primary/20 text-primary text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase">-40%</span>
+                            </div>
+                            <span class="text-[10px] text-white/30 peer-checked:text-white/50">$5.83 / mo</span>
+                        </div>
+                    </label>
+                </div>
+
+                <button onclick="handleUpgrade()" class="gradient-button w-full h-16 rounded-2xl flex items-center justify-center transition-transform active:scale-95 shadow-lg shadow-primary/20 font-bold text-lg text-black">
+                    Upgrade Now
+                </button>
+
+                <div class="mt-6 flex justify-center gap-6">
+                    <a href="calories_ai_dashboard.html" class="text-white/30 text-[11px] hover:text-white">No Thanks</a>
+                    <a href="#" class="text-white/30 text-[11px] hover:text-white">Restore Purchase</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleUpgrade() {
+            // 1. Check which radio button is selected
+            const selectedPlan = document.querySelector('input[name="billing-cycle"]:checked').value;
+
+            // 2. Define your Stripe Links
+            // 🔴 PASTE YOUR REAL STRIPE LINKS BELOW 🔴
+            const MONTHLY_LINK = "https://buy.stripe.com/test_28E5kF4xK4gu3i1bne2Ry00";
+            const YEARLY_LINK  = "https://buy.stripe.com/test_eVq5kF0hu6oC6ud62U2Ry01";
+
+            // 3. Redirect to the correct one
+            if (selectedPlan === 'yearly') {
+                window.location.href = YEARLY_LINK;
+            } else {
+                window.location.href = MONTHLY_LINK;
+            }
+        }
+    </script>
+</body>
+</html>

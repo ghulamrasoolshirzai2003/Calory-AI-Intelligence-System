@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calories AI - Activity Level</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .custom-radio-dot {
+            --radio-dot-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(244,192,37)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display">
+<!-- Header / Progress Bar Section -->
+<header class="w-full max-w-md mx-auto px-6 pt-8">
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="text-sm font-semibold text-primary tracking-wider uppercase">Step 3 of 3</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">100%</span>
+</div>
+<div class="w-full h-2 bg-slate-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-500 ease-out" style="width: 100%;"></div>
+</div>
+</div>
+</header>
+<!-- Main Content Section -->
+<main class="flex-1 w-full max-w-md mx-auto px-6 py-10 flex flex-col gap-8">
+<div class="text-center">
+<h1 class="text-3xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white">
+                How active are you?
+            </h1>
+<p class="mt-2 text-slate-600 dark:text-zinc-400 text-sm">
+                This helps us calculate your daily caloric needs.
+            </p>
+</div>
+<!-- Activity Cards Selection -->
+<div class="flex flex-col gap-4 custom-radio-dot">
+<!-- Option 1: Sedentary -->
+<label class="group relative flex items-center justify-between p-5 rounded-xl border-2 border-slate-200 dark:border-zinc-800 cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-zinc-900/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-600 dark:text-zinc-300 group-has-[:checked]:bg-primary/20 group-has-[:checked]:text-primary">
+<span class="material-symbols-outlined text-2xl">weekend</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-slate-900 dark:text-white">Sedentary</span>
+<span class="text-sm text-slate-500 dark:text-zinc-400">Little to no exercise</span>
+</div>
+</div>
+<input class="h-5 w-5 border-2 border-slate-300 dark:border-zinc-700 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+<!-- Option 2: Lightly Active (Selected Example) -->
+<label class="group relative flex items-center justify-between p-5 rounded-xl border-2 border-slate-200 dark:border-zinc-800 cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-zinc-900/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-600 dark:text-zinc-300 group-has-[:checked]:bg-primary/20 group-has-[:checked]:text-primary">
+<span class="material-symbols-outlined text-2xl">directions_walk</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-slate-900 dark:text-white">Lightly Active</span>
+<span class="text-sm text-slate-500 dark:text-zinc-400">1-2 days/week</span>
+</div>
+</div>
+<input checked="" class="h-5 w-5 border-2 border-slate-300 dark:border-zinc-700 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+<!-- Option 3: Moderately Active -->
+<label class="group relative flex items-center justify-between p-5 rounded-xl border-2 border-slate-200 dark:border-zinc-800 cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-zinc-900/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-600 dark:text-zinc-300 group-has-[:checked]:bg-primary/20 group-has-[:checked]:text-primary">
+<span class="material-symbols-outlined text-2xl">directions_run</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-slate-900 dark:text-white">Moderately Active</span>
+<span class="text-sm text-slate-500 dark:text-zinc-400">3-5 days/week</span>
+</div>
+</div>
+<input class="h-5 w-5 border-2 border-slate-300 dark:border-zinc-700 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+<!-- Option 4: Very Active -->
+<label class="group relative flex items-center justify-between p-5 rounded-xl border-2 border-slate-200 dark:border-zinc-800 cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-zinc-900/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-600 dark:text-zinc-300 group-has-[:checked]:bg-primary/20 group-has-[:checked]:text-primary">
+<span class="material-symbols-outlined text-2xl">local_fire_department</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-slate-900 dark:text-white">Very Active</span>
+<span class="text-sm text-slate-500 dark:text-zinc-400">6-7 days/week</span>
+</div>
+</div>
+<input class="h-5 w-5 border-2 border-slate-300 dark:border-zinc-700 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+</div>
+</main>
+<!-- Footer / Button Section -->
+<footer class="w-full max-w-md mx-auto p-6 mt-auto">
+    <button onclick="calculateAndFinish()" class="w-full flex items-center justify-center bg-primary hover:bg-[#e2b020] text-background-dark h-14 rounded-xl font-bold text-lg tracking-tight transition-all active:scale-[0.98] shadow-lg shadow-primary/20">
+        <span>Finish Setup</span>
+    </button>
+    <p class="text-center mt-4 text-xs text-slate-500 dark:text-zinc-500">
+        You can change this later in settings.
+    </p>
+</footer>
+
+<script>
+    function calculateAndFinish() {
+        // 1. Get selected activity
+        const selected = document.querySelector('input[name="activity_level"]:checked');
+        const label = selected.closest('label').querySelector('span.font-bold').innerText;
+
+        // 2. Assign a math multiplier
+        let multiplier = 1.2; // Sedentary
+        if (label.includes("Lightly")) multiplier = 1.375;
+        if (label.includes("Moderately")) multiplier = 1.55;
+        if (label.includes("Very")) multiplier = 1.725;
+
+        // 3. Save
+        localStorage.setItem('userActivity', multiplier);
+
+        // 4. Go to Summary
+        window.location.href = "personalized_target_summary.html";
+    }
+</script>
+<!-- Bottom Spacing for iOS Home Indicator -->
+<div class="h-6 bg-transparent"></div>
+</body></html>

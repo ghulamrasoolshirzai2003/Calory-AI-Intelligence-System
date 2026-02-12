@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calories AI - Goal Selection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .radio-selected {
+            border-color: #f4c025;
+            background-color: rgba(244, 192, 37, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto border-x border-gray-800 shadow-2xl">
+<!-- Progress Bar (PageIndicators) -->
+<div class="flex w-full flex-row items-center justify-center gap-3 pt-10 pb-4">
+<div class="h-1.5 w-12 rounded-full bg-primary shadow-[0_0_8px_rgba(244,192,37,0.4)]"></div>
+<div class="h-1.5 w-12 rounded-full bg-primary/20 dark:bg-primary/10"></div>
+<div class="h-1.5 w-12 rounded-full bg-primary/20 dark:bg-primary/10"></div>
+<div class="h-1.5 w-12 rounded-full bg-primary/20 dark:bg-primary/10"></div>
+</div>
+<!-- Header Section (HeadlineText & BodyText) -->
+<div class="px-6 pt-6 pb-2">
+<h1 class="text-gray-900 dark:text-white tracking-tight text-[32px] font-extrabold leading-tight">
+                What is your primary goal?
+            </h1>
+<p class="text-gray-600 dark:text-[#cbbc90] text-base font-normal leading-relaxed pt-3">
+                This helps us personalize your daily calorie and macro targets for Calories AI.
+            </p>
+</div>
+<!-- Goal Selection (RadioList Styled as Large Cards) -->
+<div class="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-4" style="--radio-dot-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(244,192,37)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e');">
+<!-- Lose Weight Card -->
+<label class="group relative flex cursor-pointer items-start gap-4 rounded-xl border-2 border-solid border-gray-200 dark:border-[#685a31] p-5 transition-all hover:bg-gray-50 dark:hover:bg-primary/5 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-primary/10 text-primary shrink-0">
+<span class="material-symbols-outlined !text-3xl">monitor_weight</span>
+</div>
+<div class="flex grow flex-col pt-0.5">
+<p class="text-gray-900 dark:text-white text-lg font-bold leading-none">Lose Weight</p>
+<p class="text-gray-500 dark:text-[#cbbc90] text-sm font-normal leading-normal mt-2">Burn fat and reach your target weight safely.</p>
+</div>
+<input checked="" class="h-6 w-6 border-2 border-gray-300 dark:border-[#685a31] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 transition-colors" name="goal-selection" type="radio"/>
+</label>
+<!-- Maintain Weight Card -->
+<label class="group relative flex cursor-pointer items-start gap-4 rounded-xl border-2 border-solid border-gray-200 dark:border-[#685a31] p-5 transition-all hover:bg-gray-50 dark:hover:bg-primary/5 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-primary/10 text-primary shrink-0">
+<span class="material-symbols-outlined !text-3xl">restaurant</span>
+</div>
+<div class="flex grow flex-col pt-0.5">
+<p class="text-gray-900 dark:text-white text-lg font-bold leading-none">Maintain Weight</p>
+<p class="text-gray-500 dark:text-[#cbbc90] text-sm font-normal leading-normal mt-2">Optimize your health and stay consistent with your habits.</p>
+</div>
+<input class="h-6 w-6 border-2 border-gray-300 dark:border-[#685a31] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 transition-colors" name="goal-selection" type="radio"/>
+</label>
+<!-- Gain Muscle Card -->
+<label class="group relative flex cursor-pointer items-start gap-4 rounded-xl border-2 border-solid border-gray-200 dark:border-[#685a31] p-5 transition-all hover:bg-gray-50 dark:hover:bg-primary/5 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-primary/10 text-primary shrink-0">
+<span class="material-symbols-outlined !text-3xl">fitness_center</span>
+</div>
+<div class="flex grow flex-col pt-0.5">
+<p class="text-gray-900 dark:text-white text-lg font-bold leading-none">Gain Muscle</p>
+<p class="text-gray-500 dark:text-[#cbbc90] text-sm font-normal leading-normal mt-2">Build strength and increase lean body mass efficiently.</p>
+</div>
+<input class="h-6 w-6 border-2 border-gray-300 dark:border-[#685a31] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 transition-colors" name="goal-selection" type="radio"/>
+</label>
+</div>
+<!-- Footer / Action (SingleButton) -->
+<div class="px-6 py-8 mt-auto bg-gradient-to-t from-background-light dark:from-background-dark via-background-light dark:via-background-dark to-transparent">
+<button onclick="saveGoalAndNext()" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary text-background-dark text-lg font-extrabold leading-normal tracking-[0.015em] shadow-[0_4px_20px_rgba(244,192,37,0.3)] active:scale-[0.98] transition-transform">
+    <span class="truncate">Continue</span>
+</button>
+
+<script>
+    function saveGoalAndNext() {
+        // 1. Find which radio button is checked
+        const selected = document.querySelector('input[name="goal-selection"]:checked');
+        
+        if (selected) {
+            // 2. Get the text from the label (e.g., "Lose Weight")
+            const goalText = selected.closest('label').querySelector('p').innerText;
+            
+            // 3. Save to Local Storage
+            localStorage.setItem('userGoal', goalText);
+            
+            // 4. Go to next page
+            window.location.href = "onboarding__personal_metrics.html";
+        }
+    }
+</script>
+<!-- iOS Home Indicator Spacing -->
+<div class="h-4"></div>
+</div>
+<!-- Decorative Background Gradient for Premium Feel -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
+</div>
+</body></html>

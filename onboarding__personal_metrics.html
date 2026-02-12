@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Calories AI - Metrics</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f4c025", "background-dark": "#221e10" },
+                    fontFamily: { "display": ["Inter"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Animation for error shaking */
+        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; border-color: #ef4444 !important; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen">
+    <div class="max-w-[480px] mx-auto min-h-screen flex flex-col p-6">
+        
+        <div class="flex items-center pb-2 justify-between">
+            <a href="onboarding__goal_selection.html" class="flex size-10 shrink-0 items-center justify-start cursor-pointer hover:opacity-70 transition-opacity">
+                <span class="material-symbols-outlined">arrow_back_ios_new</span>
+            </a>
+            <h2 class="text-lg font-bold">Step 2 of 3</h2>
+            <div class="w-10"></div>
+        </div>
+
+        <h1 class="text-[32px] font-bold mt-4">Personal Metrics</h1>
+        <p class="text-gray-400 mt-2">We use this to calculate your metabolism.</p>
+
+        <div class="flex-1 space-y-6 mt-8">
+            <div class="flex gap-4">
+                <div class="flex-1">
+                    <p class="text-sm font-semibold mb-2 text-white/60 tracking-wider">AGE</p>
+                    <input id="age-input" class="w-full rounded-xl bg-[#342d18] border border-[#685a31] focus:border-primary focus:ring-1 focus:ring-primary h-14 px-4 text-lg font-medium outline-none transition-all placeholder:text-white/20" placeholder="25" type="number"/>
+                </div>
+
+                <div class="flex-1">
+                    <p class="text-sm font-semibold mb-2 text-white/60 tracking-wider">GENDER</p>
+                    <div class="flex bg-[#342d18] p-1 rounded-xl h-14 border border-[#685a31] relative">
+                        <button onclick="selectGender('male')" id="btn-male" class="flex-1 rounded-lg font-bold transition-all bg-primary text-black">M</button>
+                        <button onclick="selectGender('female')" id="btn-female" class="flex-1 rounded-lg font-medium text-gray-400 transition-all hover:text-white">F</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <p class="text-sm font-semibold text-white/60 tracking-wider">CURRENT WEIGHT</p>
+                    <div class="flex bg-[#342d18] rounded-lg p-0.5 border border-[#685a31]">
+                        <button onclick="setUnit('lbs')" id="btn-lbs" class="px-3 py-1 text-xs font-bold rounded-md bg-primary text-black transition-all">LBS</button>
+                        <button onclick="setUnit('kg')" id="btn-kg" class="px-3 py-1 text-xs font-medium rounded-md text-gray-400 hover:text-white transition-all">KG</button>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <input id="weight-input" class="w-full rounded-xl bg-[#342d18] border border-[#685a31] focus:border-primary focus:ring-1 focus:ring-primary h-14 px-4 text-lg font-medium outline-none transition-all placeholder:text-white/20" placeholder="185" type="number"/>
+                    <span id="unit-label" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 font-bold text-sm">lbs</span>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="validateAndNext()" class="w-full bg-primary hover:bg-primary/90 text-black font-bold h-16 rounded-xl text-lg flex items-center justify-center gap-2 mt-auto mb-6 active:scale-[0.98] transition-transform shadow-lg shadow-primary/20">
+            Continue <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+    </div>
+
+    <script>
+        // 1. Validation Logic (Stops you if empty)
+        function validateAndNext() {
+            const ageInput = document.getElementById('age-input');
+            const weightInput = document.getElementById('weight-input');
+            
+            // Reset previous errors
+            ageInput.classList.remove('shake');
+            weightInput.classList.remove('shake');
+
+            let isValid = true;
+
+            // Check Age
+            if (!ageInput.value) {
+                ageInput.classList.add('shake'); // Shake red
+                isValid = false;
+            }
+
+            // Check Weight
+            if (!weightInput.value) {
+                weightInput.classList.add('shake'); // Shake red
+                isValid = false;
+            }
+
+            // If valid, go to next page. If not, alert.
+            if (isValid) {
+                window.location.href = "onboarding__activity_level.html";
+            } else {
+                // Optional: remove class after animation finishes so it can shake again
+                setTimeout(() => {
+                    ageInput.classList.remove('shake');
+                    weightInput.classList.remove('shake');
+                }, 500);
+            }
+        }
+
+        // 2. Gender Selection Logic
+        function selectGender(gender) {
+            const btnMale = document.getElementById('btn-male');
+            const btnFemale = document.getElementById('btn-female');
+            if (gender === 'male') {
+                btnMale.className = "flex-1 rounded-lg font-bold transition-all bg-primary text-black";
+                btnFemale.className = "flex-1 rounded-lg font-medium text-gray-400 transition-all hover:text-white";
+            } else {
+                btnFemale.className = "flex-1 rounded-lg font-bold transition-all bg-primary text-black";
+                btnMale.className = "flex-1 rounded-lg font-medium text-gray-400 transition-all hover:text-white";
+            }
+        }
+
+        // 3. Weight Unit Logic
+        function setUnit(unit) {
+            const btnLbs = document.getElementById('btn-lbs');
+            const btnKg = document.getElementById('btn-kg');
+            const input = document.getElementById('weight-input');
+            const label = document.getElementById('unit-label');
+
+            if (unit === 'lbs') {
+                btnLbs.className = "px-3 py-1 text-xs font-bold rounded-md bg-primary text-black transition-all";
+                btnKg.className = "px-3 py-1 text-xs font-medium rounded-md text-gray-400 hover:text-white transition-all";
+                input.placeholder = "185";
+                label.innerText = "lbs";
+            } else {
+                btnKg.className = "px-3 py-1 text-xs font-bold rounded-md bg-primary text-black transition-all";
+                btnLbs.className = "px-3 py-1 text-xs font-medium rounded-md text-gray-400 hover:text-white transition-all";
+                input.placeholder = "85";
+                label.innerText = "kg";
+            }
+        }
+    </script>
+</body>
+</html>

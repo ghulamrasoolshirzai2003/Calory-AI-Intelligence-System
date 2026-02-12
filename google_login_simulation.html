@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f0f2f5] flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-10 rounded-[8px] shadow-md w-full max-w-[450px] flex flex-col items-center border border-[#dadce0]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-8 mb-4">
+
+        <h1 class="text-2xl font-medium text-[#202124] mb-2">Sign in</h1>
+        <p class="text-base text-[#202124] mb-8">to continue to Calories AI</p>
+
+        <div class="w-full mb-4">
+            <div class="relative group">
+                <input type="email" id="email" class="w-full border border-[#dadce0] rounded-[4px] px-3 py-3.5 text-base focus:border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8]/20 outline-none transition-colors peer" placeholder=" ">
+                <label for="email" class="absolute left-2 top-0 -translate-y-1/2 bg-white px-1 text-xs text-[#1a73e8] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#5f6368] peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#1a73e8]">Email or phone</label>
+            </div>
+            <p class="text-[#d93025] text-xs mt-1 hidden" id="email-error">Enter a valid email address.</p>
+        </div>
+
+        <div class="w-full mb-2">
+            <div class="relative group">
+                <input type="password" id="password" class="w-full border border-[#dadce0] rounded-[4px] px-3 py-3.5 text-base focus:border-[#1a73e8] focus:ring-2 focus:ring-[#1a73e8]/20 outline-none transition-colors peer pr-10" placeholder=" ">
+                <label for="password" class="absolute left-2 top-0 -translate-y-1/2 bg-white px-1 text-xs text-[#1a73e8] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#5f6368] peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#1a73e8]">Enter your password</label>
+                
+                <span onclick="togglePassword()" class="material-symbols-outlined absolute right-3 top-3.5 text-gray-500 cursor-pointer select-none text-xl hover:text-gray-700">visibility</span>
+            </div>
+            <p class="text-[#d93025] text-xs mt-1 hidden" id="pass-error">Enter a password.</p>
+        </div>
+
+        <div class="w-full flex justify-start mb-10 mt-2">
+            <a href="#" onclick="alert('This is a demo. Password reset is disabled.')" class="text-[#1a73e8] font-medium text-sm hover:underline">Forgot email?</a>
+        </div>
+
+        <div class="w-full text-sm text-[#5f6368] mb-10 leading-relaxed">
+            Not your computer? Use Guest mode to sign in privately. 
+            <a href="#" onclick="alert('Learn more page.')" class="text-[#1a73e8] font-medium hover:underline">Learn more</a>
+        </div>
+
+        <div class="w-full flex justify-between items-center">
+            <a href="#" onclick="alert('Create Account is disabled for this demo.')" class="text-[#1a73e8] font-medium text-sm hover:underline">Create account</a>
+            
+            <button id="next-btn" onclick="handleLogin()" class="bg-[#1a73e8] text-white font-medium px-6 py-2 rounded-[4px] hover:bg-[#1669bb] transition-colors">
+                Next
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passInput = document.getElementById('password');
+            const icon = document.querySelector('.material-symbols-outlined');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                icon.innerText = "visibility_off";
+            } else {
+                passInput.type = "password";
+                icon.innerText = "visibility";
+            }
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const emailError = document.getElementById('email-error');
+            const passError = document.getElementById('pass-error');
+            const btn = document.getElementById('next-btn');
+
+            let isValid = true;
+
+            // Validate Email
+            if (!email.includes('@') || email.length < 3) {
+                emailError.classList.remove('hidden');
+                document.getElementById('email').classList.add('border-[#d93025]');
+                isValid = false;
+            } else {
+                emailError.classList.add('hidden');
+                document.getElementById('email').classList.remove('border-[#d93025]');
+            }
+
+            // Validate Password
+            if (password.length < 1) {
+                passError.classList.remove('hidden');
+                document.getElementById('password').classList.add('border-[#d93025]');
+                isValid = false;
+            } else {
+                passError.classList.add('hidden');
+                document.getElementById('password').classList.remove('border-[#d93025]');
+            }
+
+            // If everything is good, simulate login
+            if (isValid) {
+                btn.innerText = "Signing in...";
+                btn.disabled = true;
+                btn.style.opacity = "0.7";
+                
+                setTimeout(() => {
+                    // Redirect to Onboarding
+                    window.location.href = "onboarding__goal_selection.html"; 
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>

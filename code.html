@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Calories AI - Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f4c025", "background-light": "#f8f8f5", "background-dark": "#121212" },
+                    fontFamily: { "display": ["Inter"] }
+                },
+            },
+        }
+    </script>
+
+    <script type="module">
+      import { auth, db } from "./firebase-config.js";
+      import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+      import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+      const provider = new GoogleAuthProvider();
+
+      window.handleGoogleLogin = async function() {
+        console.log("Button clicked..."); 
+        
+        try {
+            console.log("Attempting to open popup...");
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            
+            console.log("Login Success! User:", user.email);
+
+            // Save basics locally
+            localStorage.setItem("userEmail", user.email);
+            localStorage.setItem("userName", user.displayName);
+            localStorage.setItem("userPhoto", user.photoURL);
+
+            // Check Database
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+
+            if (userSnap.exists() && userSnap.data().onboardingCompleted === true) {
+                console.log("Going to Dashboard");
+                window.location.href = "calories_ai_dashboard.html";
+            } else {
+                console.log("Going to Onboarding");
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        name: user.displayName,
+                        email: user.email,
+                        createdAt: new Date(),
+                        plan: "free",
+                        onboardingCompleted: false
+                    });
+                }
+                window.location.href = "onboarding__goal_selection.html";
+            }
+
+        } catch (error) {
+            console.error("FULL ERROR:", error);
+            alert("Login Failed: " + error.code + " - " + error.message);
+        }
+      }
+    </script>
+
+    <style>
+        .bg-image {
+            background-image: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?q=80&w=1287&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-black font-display antialiased h-screen w-full overflow-hidden relative flex flex-col items-center justify-end pb-12">
+
+    <div class="absolute inset-0 bg-image opacity-60"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+
+    <div class="relative z-10 w-full max-w-md px-6 flex flex-col items-center text-center">
+        
+        <div class="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(244,192,37,0.4)] mb-8 rotate-3">
+            <span class="material-symbols-outlined text-black text-4xl">local_fire_department</span>
+        </div>
+
+        <h1 class="text-4xl font-bold text-white mb-3">Calories AI</h1>
+        <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+            Track your meals instantly with AI.<br>Just snap a photo and let us handle the math.
+        </p>
+
+        <button onclick="handleGoogleLogin()" class="w-full bg-white text-black font-bold h-14 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100 transition-colors active:scale-95">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6" alt="Google Logo">
+            <span>Continue with Google</span>
+        </button>
+
+        <p class="text-gray-500 text-xs mt-6">
+            By continuing, you agree to our Terms & Privacy Policy.
+        </p>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Personalized Target Summary - Calories AI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f4c025", "background-light": "#f8f8f5", "background-dark": "#121212" },
+                    fontFamily: { "display": ["Inter", "sans-serif"] },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glow-effect { box-shadow: 0 0 25px -5px rgba(244, 192, 37, 0.3); }
+        .confetti-pattern { background-image: radial-gradient(circle, #f4c025 1px, transparent 1px); background-size: 20px 20px; opacity: 0.1; }
+    </style>
+</head>
+<body class="font-display antialiased bg-background-light dark:bg-background-dark text-gray-900 dark:text-white">
+<div class="relative flex min-h-screen w-full max-w-[430px] mx-auto flex-col overflow-x-hidden border-x border-gray-100 dark:border-gray-800 shadow-2xl bg-background-light dark:bg-background-dark">
+    
+    <header class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between">
+        <a href="onboarding__activity_level.html" class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+            <span class="material-symbols-outlined text-2xl">arrow_back</span>
+        </a>
+        <h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Summary</h2>
+    </header>
+
+    <main class="flex-1 flex flex-col pb-32">
+        <section class="relative px-4 pb-4 pt-6 text-center overflow-hidden">
+            <div class="absolute inset-0 confetti-pattern pointer-events-none"></div>
+            <h1 class="relative text-3xl font-extrabold leading-tight tracking-tight mb-2">Your Personalized Plan</h1>
+            <p class="relative text-gray-500 dark:text-gray-400 text-sm font-medium">Calculation complete. You're ready to start!</p>
+        </section>
+
+        <section class="p-4 @container">
+            <div class="glow-effect relative overflow-hidden flex flex-col items-center justify-center rounded-xl border border-primary/20 bg-white dark:bg-[#1e1e1e] p-8 shadow-xl">
+                <div class="absolute -top-10 -right-10 size-32 rounded-full bg-primary/10 blur-3xl"></div>
+                <div class="absolute -bottom-10 -left-10 size-32 rounded-full bg-primary/5 blur-3xl"></div>
+                
+                <div class="z-10 flex flex-col items-center text-center">
+                    <div class="mb-2 flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1">
+                        <span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+                        <span class="text-primary text-[10px] font-bold tracking-widest uppercase">AI CALCULATED</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1 my-4">
+                        <span id="display-calories" class="text-6xl font-black tracking-tighter text-primary">...</span>
+                        <span class="text-xl font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">kcal</span>
+                    </div>
+                    <div class="mt-2 flex flex-col items-center gap-4">
+                        <p class="text-lg font-semibold leading-normal">Daily Calorie Target</p>
+                        <div class="flex items-center gap-2 rounded-lg bg-green-500/10 px-3 py-1.5 text-green-500 border border-green-500/20">
+                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                            <span id="display-goal-label" class="text-xs font-bold">Optimized for You</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-4 mt-4">
+            <div class="flex items-center justify-between px-1 mb-2">
+                <h3 class="text-lg font-bold leading-tight tracking-tight">Macro Breakdown</h3>
+                <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-md">Balanced Goal</span>
+            </div>
+            <div class="space-y-4 rounded-xl bg-white dark:bg-[#1e1e1e] p-5 border border-gray-100 dark:border-gray-800">
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-end">
+                        <div class="flex items-center gap-2">
+                            <div class="size-2 rounded-full bg-primary"></div>
+                            <p class="text-sm font-semibold">Protein</p>
+                        </div>
+                        <p id="display-protein" class="text-sm font-bold">0g <span class="text-gray-400 font-normal ml-1">30%</span></p>
+                    </div>
+                    <div class="h-2.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                        <div class="h-full rounded-full bg-primary shadow-[0_0_10px_rgba(244,192,37,0.4)]" style="width: 30%;"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-end">
+                        <div class="flex items-center gap-2">
+                            <div class="size-2 rounded-full bg-blue-400"></div>
+                            <p class="text-sm font-semibold">Carbohydrates</p>
+                        </div>
+                        <p id="display-carbs" class="text-sm font-bold">0g <span class="text-gray-400 font-normal ml-1">40%</span></p>
+                    </div>
+                    <div class="h-2.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                        <div class="h-full rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.4)]" style="width: 40%;"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-end">
+                        <div class="flex items-center gap-2">
+                            <div class="size-2 rounded-full bg-orange-400"></div>
+                            <p class="text-sm font-semibold">Fats</p>
+                        </div>
+                        <p id="display-fats" class="text-sm font-bold">0g <span class="text-gray-400 font-normal ml-1">30%</span></p>
+                    </div>
+                    <div class="h-2.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                        <div class="h-full rounded-full bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.4)]" style="width: 30%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="px-4 mt-8">
+            <div class="flex gap-4 rounded-xl bg-primary/5 p-5 border border-primary/10">
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
+                    <span class="material-symbols-outlined text-primary">psychology</span>
+                </div>
+                <div>
+                    <p class="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                        Based on your goal, Gemini AI has calculated these targets to help you succeed.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] p-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/95 dark:via-background-dark/95 to-transparent">
+        <button id="save-btn" onclick="saveProfileToDB()" class="flex w-full items-center justify-center gap-2 rounded-xl h-16 bg-primary text-black text-lg font-bold shadow-[0_8px_30px_rgb(244,192,37,0.3)] active:scale-[0.98] transition-transform">
+            <span>Get Started</span>
+            <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+        <div class="mt-4 flex justify-center">
+            <div class="h-1.5 w-32 rounded-full bg-gray-200 dark:bg-gray-800"></div>
+        </div>
+    </footer>
+</div>
+
+<script type="module">
+    import { auth, db } from "./firebase-config.js";
+    // FIX: Changed from 10.7.1 to 12.7.0
+    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+    // 1. Run Calculations on Page Load
+    window.onload = function() {
+        calculatePlan();
+    };
+
+    let calculatedData = {}; // Store results here to save later
+
+    function calculatePlan() {
+        // Get Inputs
+        const weight = parseFloat(localStorage.getItem('userWeight')) || 70;
+        const age = parseInt(localStorage.getItem('userAge')) || 25;
+        const gender = localStorage.getItem('userGender') || 'male';
+        const activity = parseFloat(localStorage.getItem('userActivity')) || 1.375;
+        const goal = localStorage.getItem('userGoal') || "Maintain Weight";
+
+        // Calculate BMR
+        let bmr = (gender === 'male') ? (weight * 24) : (weight * 22); 
+        
+        // Calculate TDEE
+        let tdee = bmr * activity;
+
+        // Adjust for Goal
+        let targetCalories = tdee;
+        if (goal.includes("Lose")) targetCalories -= 500;
+        if (goal.includes("Gain")) targetCalories += 300;
+        targetCalories = Math.round(targetCalories);
+
+        // Calculate Macros
+        const protein = Math.round((targetCalories * 0.30) / 4);
+        const carbs = Math.round((targetCalories * 0.40) / 4);
+        const fats = Math.round((targetCalories * 0.30) / 9);
+
+        // Store globally so we can save to DB
+        calculatedData = {
+            weight, age, gender, activity, goal,
+            targetCalories, protein, carbs, fats,
+        };
+        localStorage.setItem('dailyTarget', targetCalories); // Save for dashboard
+
+        // Update UI
+        document.getElementById('display-calories').innerText = targetCalories.toLocaleString();
+        document.getElementById('display-goal-label').innerText = "Optimal for " + goal;
+        
+        document.getElementById('display-protein').innerHTML = `${protein}g <span class="text-gray-400 font-normal ml-1">30%</span>`;
+        document.getElementById('display-carbs').innerHTML = `${carbs}g <span class="text-gray-400 font-normal ml-1">40%</span>`;
+        document.getElementById('display-fats').innerHTML = `${fats}g <span class="text-gray-400 font-normal ml-1">30%</span>`;
+    }
+
+    // 2. Save to Firestore Function
+    window.saveProfileToDB = async function() {
+        const user = auth.currentUser;
+        const btn = document.getElementById('save-btn');
+
+        if (!user) {
+            // Fallback if not logged in
+            console.warn("User not logged in. Saving locally only.");
+            window.location.href = "calories_ai_dashboard.html";
+            return;
+        }
+
+        // Show loading state
+        btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Saving...`;
+        
+        try {
+            // Combine calculations with completion flag
+            const finalData = {
+                ...calculatedData, 
+                onboardingCompleted: true, 
+                updatedAt: new Date()
+            };
+
+            // Write to Firestore
+            await setDoc(doc(db, "users", user.uid), finalData, { merge: true });
+            
+            console.log("Profile successfully saved to Firestore!");
+            
+            // Redirect to Dashboard
+            window.location.href = "calories_ai_dashboard.html";
+
+        } catch (error) {
+            console.error("Error saving profile:", error);
+            alert("Error saving data: " + error.message);
+            btn.innerHTML = `<span>Try Again</span>`;
+        }
+    }
+</script>
+
+</body>
+</html>
