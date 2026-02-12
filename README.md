@@ -52,4 +52,4 @@ Professional Context
 This project serves as a key demonstration of AI-Driven Software Engineering. It showcases the ability to manage complex cloud integrations, automated backend logic, and real-time data synchronization in a modern health-tech context.
 
 👨‍💻 Developed By
-Ghulam Rasool Shirzai  Portfolio | LinkedIn
+Ghulam Rasool Shirzai
